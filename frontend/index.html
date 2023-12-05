@@ -1,0 +1,195 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panda News Aggregator</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .scrollable {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .news-card {
+            background-color: #f7f7f7;
+            border: 1px solid #e2e8f0;
+        }
+        .news-card h2 {
+            color: #2d3748;
+        }
+        .news-card p {
+            color: #4a5568;
+        }
+        .news-number {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 9999px;
+            font-weight: bold;
+            margin-right: 8px;
+            color: white;
+        }
+        .news-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+        .news-item:last-child {
+            margin-bottom: 0;
+        }
+        .news-item h3 {
+            font-size: 0.875rem; /* 14px */
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .news-item p {
+            font-size: 0.75rem; /* 12px */
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        function Header() {
+            return (
+                <div className="bg-gray-900 text-white p-4 flex justify-between items-center">
+                    <h1 className="text-2xl font-bold">Panda</h1>
+                    <div>
+                        <button className="text-gray-400 hover:text-white mx-2">
+                            <i className="fas fa-cog"></i>
+                        </button>
+                        <button className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded">
+                            Log In
+                        </button>
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded ml-4">
+                            Sign Up
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        function NewsCard({ title, items, color }) {
+            return (
+                <div className="news-card shadow rounded p-4 mb-4">
+                    <h2 className="text-xl font-bold pb-2 mb-4">{title}</h2>
+                    <div className="scrollable">
+                        {items.map((item, index) => (
+                            <div key={index} className="news-item">
+                                <div className="news-number" style={{ backgroundColor: color }}>{index + 1}</div>
+                                <div>
+                                    <h3 className="hover:underline">{item.title}</h3>
+                                    <p>{item.meta}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            const newsSources = [
+                {
+                    title: 'PRODUCT HUNT',
+                    color: '#da552f',
+                    items: [
+                        { title: 'Swiffy', meta: 'Simplify business travel with your AI assistant' },
+                        { title: 'Watermark Remover by Magic Studio', meta: 'Remove watermarks using AI in seconds' },
+                        // ... other items
+                    ],
+                },
+                {
+                    title: 'HACKER NEWS',
+                    color: '#ff6600',
+                    items: [
+                        { title: 'System-wide Open Source Ad Blocker for Mac, Windows, and Linux', meta: '56 points | 26 comments' },
+                        { title: 'Dogbolt Decompiler Explorer', meta: '280 points | 50 comments' },
+                        // ... other items
+                    ],
+                },
+                {
+                    title: 'DESIGNER NEWS',
+                    color: '#2d72d9',
+                    items: [
+                        { title: 'Magento Store Design - Magento Development Services', meta: '6 points | 0 comments' },
+                        { title: 'Adapting to Gmail and Yahoo’s 2024 Spam Protection Requirements', meta: '2 points | 0 comments' },
+                        // ... other items
+                    ],
+                },
+                {
+                    title: 'GITHUB',
+                    color: '#24292e',
+                    items: [
+                        { title: 'AnimateAnyone', meta: 'Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation' },
+                        { title: 'WeChatMsg', meta: '7557 points | 14 minutes ago' },
+                        // ... other items
+                    ],
+                },
+                {
+                    title: 'CSS-TRICKS',
+                    color: '#264de4',
+                    items: [
+                        { title: 'Passkeys: What the Heck and Why?', meta: '0 comments | 8 months ago' },
+                        { title: 'Some Cross-Browser DevTools Features You Might Not Know', meta: '0 comments | 8 months ago' },
+                        // ... other items
+                    ],
+                },
+                {
+                    title: 'DEV.TO',
+                    color: '#0a0a0a',
+                    items: [
+                        { title: 'tsParticles 3.0.0 is out. Breaking changes ahead.', meta: '0 points | 0 comments | 25 minutes ago' },
+                        { title: 'AWS re:Invent 2023@home - An AWS Community Builder\'s Experience', meta: '0 points | 2 comments | 1 hour ago' },
+                        // ... other items
+                    ],
+                },
+                {
+                    title: 'SIDEBAR',
+                    color: '#fa6400',
+                    items: [
+                        { title: '10 Weird HTML Hacks That Shaped The Internet', meta: '17 hours ago' },
+                        { title: 'You don’t need JavaScript for that', meta: '17 hours ago' },
+                        // ... other items
+                    ],
+                },
+                {
+                    title: 'REDDIT',
+                    color: '#ff4500',
+                    items: [
+                        { title: 'Official GTA VI Trailer Video', meta: '0 points | 109392 comments | 1 hour ago' },
+                        { title: 'Israel orders more Gazans to flee, bombs areas where it sends them', meta: '14900 points | 3793 comments | 10 hours ago' },
+                        // ... other items
+                    ],
+                },
+                // ... other news sources
+            ];
+
+            return (
+                <div>
+                    <Header />
+                    <div className="container mx-auto p-6">
+                        <div className="grid grid-cols-3 gap-4">
+                            {newsSources.map((source, index) => (
+                                <NewsCard key={index} title={source.title} items={source.items} color={source.color} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+</body>
+</html>
